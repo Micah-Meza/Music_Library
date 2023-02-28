@@ -33,24 +33,39 @@ import MusicTable from './Components/MusicTable/MusicTable';
 import SearchBar from './Components/SearchBar/SearchBar';
 
 function App() {
-  const [data, setData] = useState() 
+  const [songs, setSongs] = useState() 
 
   useEffect(() => {
     getAllSongs();
     console.log("Its Working Here!")
   }, [])
-
+    
   async function getAllSongs(){
-    const reponse = await axios.get('http://127.0.0.1:8000/api/music/');
-    console.log(reponse.data);
-    setData(reponse.data)
+    const response = await axios.get('http://127.0.0.1:8000/api/music/');
+    console.log('This is response')
+    setSongs(response.data)
+  
   }
+
+  async function createSong(newSong){
+    let response = await axios.post('http://127.0.0.1:8000/api/music/', newSong)
+    if(response.status === 201){
+      setSongs(response.data)
+      await getAllSongs();
+    } else {
+      console.log('Error in Post.')
+    }
+  }
+
+
 
   return (
     <div>
       <div>
         <SearchBar />
-        <MusicTable parentData = {data}/>
+        {console.log('This is super below')}
+        {console.log(songs)}
+        <MusicTable songs ={songs}/>
       </div>
     </div>
   );

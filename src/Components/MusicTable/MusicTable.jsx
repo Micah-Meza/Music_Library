@@ -1,9 +1,14 @@
+import axios from "axios";
 
 
+const MusicTable = ({songs}) => {
 
-const MusicTable = ({data}) => {
+    console.log("This is from MusicTable")
+    console.log(songs)
+
+
     return (
-
+        <>
         <table>
             <thead>
                 <tr>
@@ -16,24 +21,26 @@ const MusicTable = ({data}) => {
                 </tr>
             </thead>
             <tbody>
-                {data.parentData.map((song) => {
-                    return(
+                {songs.songs.map((song) => {
+                    return (
                         <tr>
                             <td>{song.title}</td>
+                            <td>{song.artist}</td>
+                            <td>{song.album}</td>
+                            <td>{song.genre}</td>
+                            <td>{song.release}</td>
+                            <div>
+                                <td>{song.options}</td>
+                            </div>
                         </tr>
                     );
                 })}
-
-
-
             </tbody>
         </table>
-
-
-
+        </>
     );
 }
- 
+
 export default MusicTable;
 
 
