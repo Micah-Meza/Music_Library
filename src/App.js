@@ -31,31 +31,37 @@ import axios from 'axios';
 import './App.css';
 import MusicTable from './Components/MusicTable/MusicTable';
 import SearchBar from './Components/SearchBar/SearchBar';
+import CreateSong from './Components/CreateSong/CreateSong';
 
 function App() {
   const [songs, setSongs] = useState() 
+  let [newSong, setNewSong] = useState(songs)
 
   useEffect(() => {
     getAllSongs();
-    console.log("Its Working Here!")
+  
   }, [])
-    
+  
+
   async function getAllSongs(){
     const response = await axios.get('http://127.0.0.1:8000/api/music/');
-    console.log('This is response')
+    console.log(response.data, 'Testing @ Get All' )
     setSongs(response.data)
   
   }
 
-  async function createSong(newSong){
-    let response = await axios.post('http://127.0.0.1:8000/api/music/', newSong)
+  async function createSong(newSongEntry){
+    let response = await axios.post('http://127.0.0.1:8000/api/music/', newSongEntry)
+    newSong = [newSongEntry,...songs]
+    setNewSong(newSong)
     if(response.status === 201){
-      setSongs(response.data)
+      
       await getAllSongs();
     } else {
-      console.log('Error in Post.')
+
     }
   }
+
 
 
 
@@ -63,9 +69,8 @@ function App() {
     <div>
       <div>
         <SearchBar />
-        {console.log('This is super below')}
-        {console.log(songs)}
-        <MusicTable songs ={songs}/>
+        <MusicTable songs ={songs} />
+        <CreateSong newSong={createSong} />     
       </div>
     </div>
   );

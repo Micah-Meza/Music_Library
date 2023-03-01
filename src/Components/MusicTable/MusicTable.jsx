@@ -1,10 +1,7 @@
-import axios from "axios";
+
 
 
 const MusicTable = ({songs}) => {
-
-    console.log("This is from MusicTable")
-    console.log(songs)
 
 
     return (
@@ -16,23 +13,24 @@ const MusicTable = ({songs}) => {
                   <th>Artist</th>  
                   <th>Album</th>  
                   <th>Genre</th>  
-                  <th>Release</th>  
+                  <th>Release Date</th>  
                   <th>Options</th>  
                 </tr>
             </thead>
             <tbody>
-                {songs.songs.map((song) => {
+                {songs && songs.map((song) => {
                     return (
-                        <tr>
+                        <tr key = {song.id}>
                             <td>{song.title}</td>
                             <td>{song.artist}</td>
                             <td>{song.album}</td>
+                            <td>{song.release_date}</td>
                             <td>{song.genre}</td>
-                            <td>{song.release}</td>
-                            <div>
-                                <td>{song.options}</td>
-                            </div>
+                            <td>{song.options}</td>
+                            
                         </tr>
+
+                        
                     );
                 })}
             </tbody>
