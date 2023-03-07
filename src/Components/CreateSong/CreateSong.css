@@ -1,0 +1,17 @@
+.text_label {
+display: flex;
+color: whitesmoke;
+padding: 1%;
+background-color: rgb(6, 6, 6);
+justify-content: space-evenly;
+align-items: baseline;
+flex-wrap: wrap;
+
+}
+
+.input_button {
+margin: 6px;
+}
+
+
+

@@ -1,0 +1,18 @@
+/*.background_image {
+    background-image: url("/src/assets/Majin silver.webp");
+    background-size: cover;
+    width: 160px;
+    height: 160px;
+    border: 2px solid;
+    color: pink;
+    resize: both;
+    overflow: scroll;
+}
+*/
+
+
+.heading{
+    text-align: center;
+    color: burlywood;
+}
+

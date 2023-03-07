@@ -1,20 +1,12 @@
 /*
 
-(10 points) As a developer, I want to use AXIOS to consume the Django REST API
-on the frontend.
-
-(10 points) As a developer, I want to display the data (song title, album, artist,
-genre, and release date) from the API within a table on the frontend.
-
-
 (5 points) As a developer, I want to have an aesthetically pleasing user interface
 to ensure a great user experience.
 
 (10 points) As a music enthusiast, I want to be able to filter the table of music by
 album, artist, genre, release date, and title.
 
-(10 points) As a music enthusiast, I want to be able to add a song to my database
-by using Axios to make a POST request to the Django REST API
+
 Bonus
 
 (10 points) As a music enthusiast, I want to be able to update the song data in my
@@ -32,10 +24,18 @@ import './App.css';
 import MusicTable from './Components/MusicTable/MusicTable';
 import SearchBar from './Components/SearchBar/SearchBar';
 import CreateSong from './Components/CreateSong/CreateSong';
+import { Routes, Route } from 'react-router-dom';
+import HomePage from './HomePage/HomePage';
+import EditSong from './HomePage/EditSong';
+//import EditSong from './Components/EditSong/EditSong';
+//import DeleteSong from './Components/DeleteSong/DeleteSong';
 
 function App() {
   const [songs, setSongs] = useState() 
   let [newSong, setNewSong] = useState(songs)
+  const [editSong, setEditSong] = useState()
+  const [deleteSong, setDeleteSong] = useState()
+  
 
   useEffect(() => {
     getAllSongs();
@@ -45,13 +45,12 @@ function App() {
 
   async function getAllSongs(){
     const response = await axios.get('http://127.0.0.1:8000/api/music/');
-    console.log(response.data, 'Testing @ Get All' )
     setSongs(response.data)
   
   }
 
   async function createSong(newSongEntry){
-    let response = await axios.post('http://127.0.0.1:8000/api/music/', newSongEntry)
+    let response = await axios.get('http://127.0.0.1:8000/api/music/', newSongEntry)
     newSong = [newSongEntry,...songs]
     setNewSong(newSong)
     if(response.status === 201){
@@ -62,15 +61,30 @@ function App() {
     }
   }
 
-
+  async function editSongInfo(){
+    const response = await axios.put(`http://127.0.0.1:8000/api/music/`+ songs.id);
+    setEditSong(editSong)
+    console.log(response.data)
+    console.log(songs.id)
+  }
+ 
+  async function updatePost() {
+    const response = await fetch(`http://127.0.0.1:8000/api/music/${songs.id}/`);
+        const data = await response.json();
+        setEditSong(songs.id);
+    }
 
 
   return (
-    <div>
-      <div>
+    <div className ='background_image'>
+      <div> 
         <SearchBar />
-        <MusicTable songs ={songs} />
-        <CreateSong newSong={createSong} />     
+        <MusicTable songs = {songs} /> 
+        <CreateSong newSong = {createSong} />    
+
+         
+
+        
       </div>
     </div>
   );
